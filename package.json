@@ -22,8 +22,10 @@
       "browser": "./build/browser/src/index.js"
     }
   },
-  "main": "build/browser/src/index.js",
-  "files": [
+  "imports": {
+    "#helpers/*": "./build/browser/src/helpers/*.js",
+    "#mixins": "./build/browser/src/mixins/index.js"
+  },  "files": [
     "build/browser/src"
   ],
   "scripts": {
