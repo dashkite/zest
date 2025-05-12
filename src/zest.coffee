@@ -1,26 +1,25 @@
+import * as Fn from "@dashkite/joy/function"
+import Generic from "@dashkite/generic"
+import * as Type from "@dashkite/joy/type"
 import Arr from "#helpers/array"
-import { property } from "./helpers/metaclass"
+
 import { 
-  metaclass, attributes
-  classes, data, properties
-  events, selectors, manipulators
-  navigators, forms, dimension
+  metaclass, attributes, classes,
+  data, properties, events, filters, 
+  manipulators, navigators, forms, 
+  dimensions, files
 } from "./mixins"
 
-#
-# - event methods (stop, intercept, etc.)
-#
-
 class Zest extends do Fn.pipe [
-    metaclass, attributes
-    classes, data, properties
-    events, selectors, manipulators
-    navigators, forms, dimension
+    metaclass, attributes, classes,
+    data, properties, events, filters, 
+    manipulators, navigators, forms, 
+    dimensions, files
   ]
 
   @make: do ->
 
-    Generic.make "DOM.List"
+    Generic.make "Zest.make"
 
       .define [], -> @make []
       
@@ -28,7 +27,7 @@ class Zest extends do Fn.pipe [
         Object.assign ( new @ ), 
           elements: Arr.uniqueAndCompact Array.from it
 
-      .define [ Type.isGenerator ], ( g ) -> @make g()
+      .define [ Type.isGeneratorFunction ], ( g ) -> @make g()
 
   @ready: do ->
     isReady = -> document.readyState == "interactive"
@@ -45,21 +44,26 @@ class Zest extends do Fn.pipe [
       do -> ( yield e ) for e in elements
 
   map: ( f ) ->
-    elements = @elements
-    @constructor.make -> 
-      ( yield f e ) for e in elements
-      return
+    @constructor.make @elements.map f
+
+  filter: ( f ) ->
+    @constructor.make @elements.filter f
+
+  # slice?
 
   each: ( f ) ->
     ( f e ) for e in @elements
     @
 
+  at: ( n ) -> @elements.at n
+  
   @properties
 
-    first: 
-      get: -> @elements[ 0 ]
+    first:
+      get: -> @at 0
 
-
+    last:
+      get: -> @at -1
 
 export { Zest }
 export default Zest

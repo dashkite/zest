@@ -47,5 +47,4 @@ attributes = ( base = metaclass()) ->
         get: -> 
           new Proxy ( Attributes.make @ ), Handler
 
-
 export { attributes }

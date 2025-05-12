@@ -1,3 +1,4 @@
+import Generic from "@dashkite/generic"
 import { flash } from "@dashkite/flashdom"
 import { metaclass } from "./metaclass"
 
@@ -35,9 +36,21 @@ manipulators = ( base = metaclass()) ->
     @properties
       html:
         get: -> @first?.innerHTML
-        set: ( value ) ->
-          @each ( element ) ->
-            element.innerHTML = value
+        set: do ->
+
+          ( Generic.make "html" )
+          
+            .define [ String ], ( value ) ->
+              @each ( element ) ->
+                element.innerHTML = value
+
+            .define [ Node ], ( node ) ->
+              @each ( element ) ->
+                element.replaceChildren node
+
+            .define [ NodeList ], ( nodes ) ->
+              @each ( element ) ->
+                element.replaceChildren nodes...
 
     render: ( value ) ->
       @each ( element ) ->

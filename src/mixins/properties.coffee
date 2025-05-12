@@ -5,7 +5,7 @@ properties = ( base = metaclass()) ->
 
   class extends base
 
-    @property
+    @properties
 
       id:
         get: -> @first?.id
@@ -24,6 +24,12 @@ properties = ( base = metaclass()) ->
         set: ( value ) ->
           @each ( element ) ->
             element.value = value
+
+      text:
+        get: -> @first?.innerText
+        set: ( text ) ->
+          @each ( element ) ->
+            element.innerText = text
 
       properties:
         get: ->

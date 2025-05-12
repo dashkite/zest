@@ -25,7 +25,8 @@
   "imports": {
     "#helpers/*": "./build/browser/src/helpers/*.js",
     "#mixins": "./build/browser/src/mixins/index.js"
-  },  "files": [
+  },
+  "files": [
     "build/browser/src"
   ],
   "scripts": {
@@ -38,8 +39,12 @@
     "@dashkite/assert": "^0.1.4",
     "@dashkite/genie": "link:../genie",
     "@dashkite/genie-clean": "link:../genie-clean",
-    "@dashkite/genie-coffee": "link:../genie-coffee"
+    "@dashkite/genie-coffee": "link:../genie-coffee",
+    "@dashkite/genie-module": "link:../genie-module"
   },
   "dependencies": {
+    "@dashkite/flashdom": "link:../flashdom",
+    "@dashkite/generic": "link:../generic",
+    "@dashkite/joy": "link:../joy"
   }
 }

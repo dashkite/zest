@@ -24,7 +24,7 @@ class Classes
   contains: ( name ) -> 
     @zest.first? && @zest.first.classList.contains name
 
-attributes = ( base = metaclass()) ->
+classes = ( base = metaclass()) ->
 
   class extends base
 
@@ -33,4 +33,4 @@ attributes = ( base = metaclass()) ->
       classes:
         get: -> Class.make @
 
-export { attributes }
+export { classes }

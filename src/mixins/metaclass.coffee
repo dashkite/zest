@@ -4,7 +4,8 @@ metaclass = ( base = Object ) ->
 
   class extends base
 
-    @property: ( name, specifier ) ->
-      Meta.property name, specifier, @::
+    @properties: ( dictionary ) ->
+      Meta.properties dictionary, @::
 
+export default metaclass
 export { metaclass }

@@ -56,5 +56,4 @@ observers = ( base = metaclass()) ->
               handler event.target
           @each ( element ) -> observer.observe element
 
-
 export { observers }

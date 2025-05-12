@@ -5,7 +5,7 @@ class Form extends metaclass()
   @make: ( zest ) ->
     Object.assign ( new @ ), { zest }
 
-  @property
+  @properties
     data:
       get: ->
         if @zest.first?
@@ -18,8 +18,8 @@ class Form extends metaclass()
 forms = ( base = metaclass()) ->
 
   class extends base
-    @property 
-      data:
+    @properties
+      form:
         get: ->
           Form.make @
 

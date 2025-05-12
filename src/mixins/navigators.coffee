@@ -10,15 +10,15 @@ navigators = ( base = metaclass()) ->
 
       next:
         get: ->
-          @map ( element ) -> @element.nextSibling
+          @map ( element ) -> element.nextSibling
 
       previous:
         get: ->
-          @map ( element ) -> @element.previousSibling
+          @map ( element ) -> element.previousSibling
 
       parent:
         get: ->
-          @map ( element ) -> @element.parentNode
+          @map ( element ) -> element.parentNode
 
       children:
         get: ->
