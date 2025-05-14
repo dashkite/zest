@@ -9,9 +9,10 @@ class Modify
     do ({ observer } = {}) =>
       observer = new MutationObserver ( record ) ->
         handler record.target
-      observer.observe element, 
-        attributes: true
-        attributeFilter: names
+      @zest.each ( element ) ->
+        observer.observe element, 
+          attributes: true
+          attributeFilter: names
 
   children: ( handler ) ->
     do ({ observer } = {}) =>
