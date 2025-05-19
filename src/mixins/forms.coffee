@@ -6,14 +6,16 @@ class Form extends metaclass()
     Object.assign ( new @ ), { zest }
 
   @properties
+    form:
+      get: ->
+        @zest.first?.querySelector "form" 
     data:
       get: ->
-        if @zest.first?
-          Object.fromEntries ( new FormData @element )
-        else {}
+        # returns {} when !@form?
+        Object.fromEntries ( new FormData @form )
 
   reset: ->
-    @zest.first?.reset?()
+    @form?.reset()
 
 forms = ( base = metaclass()) ->
 
