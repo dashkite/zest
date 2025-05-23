@@ -42,8 +42,8 @@ class Listener
     @fx.push Fn.tee ( event ) -> event?.preventDefault()
 
   intercept: Fn.chain -> 
-    stop()
-    prevent()
+    @stop()
+    @prevent()
 
   matches: Fn.chain ( selector ) ->
     @fx.push ( event ) -> 

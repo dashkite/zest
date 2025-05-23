@@ -1,11 +1,26 @@
 import { metaclass } from "./metaclass"
 import Handler from "#helpers/data-handler"
 
-class DataSet
+class DataSet extends metaclass()
 
   @make: ( zest ) ->
     Object.assign ( new @ ), { zest }
 
+  @properties
+    keys:
+      get: ->
+        if !@zest.first?
+          []
+        else
+          Object.keys @zest.first.dataset
+
+    data: 
+      get: ->
+        if !@zest.first?
+          {}
+        else
+          { @zest.first.dataset... }
+    
   get: ( name ) ->
     @zest.first?.dataset[ name ]
   
@@ -20,18 +35,6 @@ class DataSet
     @zest.each ( element ) ->
       delete element.dataset[ name ]
 
-  keys: ->
-    if !@first?
-      []
-    else
-      Object.keys @first.dataset
-
-  data: ->
-    if !@first?
-      {}
-    else
-      { @first.dataset... }
-  
 data = ( base = metaclass()) ->
 
   class extends base
@@ -44,8 +47,5 @@ data = ( base = metaclass()) ->
       data:
         get: -> 
           new Proxy ( DataSet.make @ ), Handler
-
-
-
 
 export { data }

@@ -17,4 +17,10 @@ Handler =
 
   ownKeys: ( target ) -> target.keys
     
+  getOwnPropertyDescriptor: ( target, property ) ->
+    if property in target.keys
+      enumerable: true
+      configurable: true
+      value: target.get property
+
 export default Handler

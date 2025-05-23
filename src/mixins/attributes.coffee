@@ -1,17 +1,38 @@
 import { metaclass } from "./metaclass"
 import Handler from "#helpers/data-handler"
 
-class Attributes
+class Attributes extends metaclass()
 
   @make: ( zest ) ->
     Object.assign ( new @ ), { zest }
 
+  @properties
+
+    keys:
+      get: ->
+        if !@zest.first?
+          []
+        else
+          Array
+            .from @zest.first.attributes
+            .map ({ name }) -> name
+
+    data:
+      get: ->
+        if !@zest.first?
+          {}
+        else
+          Object.fromEntries do ->
+            Array
+              .from @zest.first.attributes
+              .map ({ name, value }) -> [ name, value ]
+      
   has: ( name ) ->
     @zest.first?.hasAttribute name
 
   get: ( name ) ->
     @zest.first?.getAttribute name
-  
+
   set: ( name, value ) ->
     @zest.each ( element ) ->
       element.setAttribute name, value
@@ -19,24 +40,6 @@ class Attributes
   remove: ( name ) ->
     @zest.each ( element ) ->
       element.removeAttribute name
-
-  keys: ->
-    if !@first?
-      []
-    else
-      Array
-        .from @first.attributes
-        .map ({ name }) -> name
-
-  data: ->
-    if !@first?
-      {}
-    else
-      Object.fromEntries do ->
-        Array
-          .from @first.attributes
-          .map ({ name, value }) -> [ name, value ]
-  
 
 attributes = ( base = metaclass()) ->
 

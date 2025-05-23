@@ -7,14 +7,14 @@ import {
   metaclass, attributes, classes,
   data, properties, events, filters, 
   manipulators, navigators, forms, 
-  dimensions, files, observers
+  dimensions, files, observers, slots
 } from "./mixins"
 
 class Zest extends do Fn.pipe [
     metaclass, attributes, classes,
     data, properties, events, filters, 
     manipulators, navigators, forms, 
-    dimensions, files, observers
+    dimensions, files, observers, slots
   ]
 
   @make: do ->
