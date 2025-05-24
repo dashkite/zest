@@ -1,4 +1,4 @@
-import { metaclass } from "./metaclass"
+import { metaclass } from "@dashkite/joy/metaclass"
 import Handler from "#helpers/data-handler"
 
 class Attributes extends metaclass()
@@ -6,26 +6,24 @@ class Attributes extends metaclass()
   @make: ( zest ) ->
     Object.assign ( new @ ), { zest }
 
-  @properties
+  @getters
 
-    keys:
-      get: ->
-        if !@zest.first?
-          []
-        else
+    keys: ->
+      if !@zest.first?
+        []
+      else
+        Array
+          .from @zest.first.attributes
+          .map ({ name }) -> name
+
+    data: ->
+      if !@zest.first?
+        {}
+      else
+        Object.fromEntries do ->
           Array
             .from @zest.first.attributes
-            .map ({ name }) -> name
-
-    data:
-      get: ->
-        if !@zest.first?
-          {}
-        else
-          Object.fromEntries do ->
-            Array
-              .from @zest.first.attributes
-              .map ({ name, value }) -> [ name, value ]
+            .map ({ name, value }) -> [ name, value ]
       
   has: ( name ) ->
     @zest.first?.hasAttribute name
@@ -45,9 +43,8 @@ attributes = ( base = metaclass()) ->
 
   class extends base
 
-    @properties
-      attributes:
-        get: -> 
-          new Proxy ( Attributes.make @ ), Handler
+    @getters
+      attributes: -> 
+        new Proxy ( Attributes.make @ ), Handler
 
 export { attributes }

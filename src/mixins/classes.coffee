@@ -1,4 +1,4 @@
-import { metaclass } from "./metaclass"
+import { metaclass } from "@dashkite/joy/metaclass"
 
 class Classes
 
@@ -22,15 +22,14 @@ class Classes
       element.classList.replace current, replacement
 
   contains: ( name ) -> 
-    @zest.first? && @zest.first.classList.contains name
+    @zest.filter ( element ) ->
+      element.classList.contains name
 
 classes = ( base = metaclass()) ->
 
   class extends base
 
-    @properties 
-
-      classes:
-        get: -> Class.make @
+    @getters 
+      classes: -> Classes.make @
 
 export { classes }

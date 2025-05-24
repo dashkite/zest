@@ -1,4 +1,4 @@
-import { metaclass } from "./metaclass"
+import { metaclass } from "@dashkite/joy/metaclass"
 
 # TODO traversals
 
@@ -6,26 +6,22 @@ navigators = ( base = metaclass()) ->
 
   class extends base
 
-    @properties
+    @getters
 
-      next:
-        get: ->
-          @map ( element ) -> element.nextSibling
+      next: ->
+        @map ( element ) -> element.nextSibling
 
-      previous:
-        get: ->
-          @map ( element ) -> element.previousSibling
+      previous: ->
+        @map ( element ) -> element.previousSibling
 
-      parent:
-        get: ->
-          @map ( element ) -> element.parentNode
+      parent: ->
+        @map ( element ) -> element.parentNode
 
-      children:
-        get: ->
-          if @first?
-            @constructor.make @first.childNodes
-          else
-            @construct.make()
+      children: ->
+        if @first?
+          @constructor.make @first.childNodes
+        else
+          @construct.make()
 
     closest: ( selector ) ->
       @map ( element ) ->

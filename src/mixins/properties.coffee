@@ -1,4 +1,4 @@
-import { metaclass } from "./metaclass"
+import { metaclass } from "@dashkite/joy/metaclass"
 import Handler from "#helpers/data-handler"
 
 properties = ( base = metaclass()) ->

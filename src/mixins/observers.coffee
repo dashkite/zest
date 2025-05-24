@@ -1,4 +1,4 @@
-import { metaclass } from "./metaclass"
+import { metaclass } from "@dashkite/joy/metaclass"
 
 class Modify
 
@@ -34,10 +34,9 @@ observers = ( base = metaclass()) ->
 
   class extends base
 
-    @properties
+    @getters
 
-      modify:
-        get: -> Modify.make @
+      modify: -> Modify.make @
   
     show: do ({ visible } = {}) ->
       visible = ( event ) -> event.isIntersecting

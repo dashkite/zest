@@ -1,9 +1,12 @@
 Arr =
 
-  uniqueAndCompact: ( ax ) ->
+  normalize: ( ax ) ->
     seen = new Set
-    for a in ax when a? && !seen.has a
-      seen.add a
-      a
+    bx = ( Iterator.from ax )
+      .flatMap ( a ) ->
+        if Array.isArray a then a else [ a ]
+    for b from bx when b? && !seen.has b
+      seen.add b
+      b    
 
 export default Arr

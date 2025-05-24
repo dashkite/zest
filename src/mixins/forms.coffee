@@ -1,18 +1,16 @@
-import { metaclass } from "./metaclass"
+import { metaclass } from "@dashkite/joy/metaclass"
 
 class Form extends metaclass()
 
   @make: ( zest ) ->
     Object.assign ( new @ ), { zest }
 
-  @properties
-    form:
-      get: ->
-        @zest.first?.querySelector "form" 
-    data:
-      get: ->
-        # returns {} when !@form?
-        Object.fromEntries ( new FormData @form )
+  @getters
+    form: ->
+      @zest.first?.querySelector "form" 
+    data: ->
+      # returns {} when !@form?
+      Object.fromEntries ( new FormData @form )
 
   reset: ->
     @form?.reset()
@@ -20,9 +18,7 @@ class Form extends metaclass()
 forms = ( base = metaclass()) ->
 
   class extends base
-    @properties
-      form:
-        get: ->
-          Form.make @
+    @getters
+      form: -> Form.make @
 
 export { forms }

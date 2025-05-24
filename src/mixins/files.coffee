@@ -1,23 +1,21 @@
-import { metaclass } from "./metaclass"
+import { metaclass } from "@dashkite/joy/metaclass"
 
 class Files extends metaclass()
 
   @make: ( list ) ->
     Object.assign ( new @ ), { list }
 
-  @properties
-    url:
-      get: -> 
-        if @list?[0]?
-          URL.createObjectURL @list[0]
+  @getters
+    url: -> 
+      if @list?[0]?
+        URL.createObjectURL @list[0]
 
 files = ( base = metaclass()) ->
 
   class extends base
 
-    @properties
-      files:
-        get: -> Files.make @first.files
+    @getters
+      files: -> Files.make @first.files
 
 
 export { files }

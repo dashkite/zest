@@ -1,10 +1,11 @@
 import * as Fn from "@dashkite/joy/function"
+import { metaclass } from "@dashkite/joy/metaclass"
 import Generic from "@dashkite/generic"
 import * as Type from "@dashkite/joy/type"
 import Arr from "#helpers/array"
 
 import { 
-  metaclass, attributes, classes,
+  attributes, classes,
   data, properties, events, filters, 
   manipulators, navigators, forms, 
   dimensions, files, observers, slots
@@ -25,7 +26,7 @@ class Zest extends do Fn.pipe [
       
       .define [ Type.isIterable ], ( it ) ->
         Object.assign ( new @ ), 
-          elements: Arr.uniqueAndCompact Array.from it
+          elements: Arr.normalize Array.from it
 
       .define [ Type.isGeneratorFunction ], ( g ) -> @make g()
 
@@ -57,13 +58,11 @@ class Zest extends do Fn.pipe [
 
   at: ( n ) -> @elements.at n
   
-  @properties
+  @getters
 
-    first:
-      get: -> @at 0
+    first: -> @at 0
 
-    last:
-      get: -> @at -1
+    last: -> @at -1
 
 export { Zest }
 export default Zest

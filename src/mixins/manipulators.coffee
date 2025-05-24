@@ -1,6 +1,6 @@
 import Generic from "@dashkite/generic"
 import { flash } from "@dashkite/flashdom"
-import { metaclass } from "./metaclass"
+import { metaclass } from "@dashkite/joy/metaclass"
 
 ###
 
