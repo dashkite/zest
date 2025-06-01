@@ -23,6 +23,11 @@ navigators = ( base = metaclass()) ->
         else
           @construct.make()
 
+    # TODO use flatmap? to expand the zest with qsall?
+    query: ( selector ) ->
+      @map ( element ) ->
+        element.querySelector selector
+
     closest: ( selector ) ->
       @map ( element ) ->
         element.closest selector

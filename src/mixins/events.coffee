@@ -98,4 +98,7 @@ events = ( base = Object ) ->
     focus: Fn.chain ( handler ) -> 
       @first?.focus()
 
+    select: Fn.chain ( handler ) -> 
+      @first?.select()
+
 export { events }
