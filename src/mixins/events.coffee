@@ -20,6 +20,7 @@ class Listener
   keyup: -> @listen "keyup"
   keydown: -> @listen "keydown"
   input: -> @listen "input"
+  invalid: -> @listen "invalid"
   load: -> @listen "load"
   mouseup: -> @listen "mouseup"
   mousedown: -> @listen "mousedown"
@@ -70,6 +71,12 @@ events = ( base = Object ) ->
       ( listener.listen event ) if event?
       listener
 
+    capture: ( event ) ->
+      listener = Listener.make @
+      ( listener.listen event ) if event?
+      listener.capture()
+      listener
+    
     dispatch: do ->
 
       ( Generic.make "Zest::dispatch" )

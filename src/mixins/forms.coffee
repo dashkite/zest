@@ -3,17 +3,16 @@ import { metaclass } from "@dashkite/joy/metaclass"
 class Form extends metaclass()
 
   @make: ( zest ) ->
-    Object.assign ( new @ ), { zest }
+    Object.assign ( new @ ),
+      form: zest.first if zest.first instanceof HTMLFormElement  
 
   @getters
-    form: ->
-      @zest.first?.querySelector "form" 
+
     data: ->
       # returns {} when !@form?
       Object.fromEntries ( new FormData @form )
 
-  reset: ->
-    @form?.reset()
+  reset: -> @form?.reset()
 
 forms = ( base = metaclass()) ->
 
