@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@dashkite/flashdom':
-        specifier: link:../flashdom
-        version: link:../flashdom
+        specifier: 0.1.0
+        version: 0.1.0
       '@dashkite/generic':
         specifier: 0.9.0
         version: 0.9.0
@@ -597,6 +597,9 @@ packages:
 
   '@dashkite/assert@0.1.4':
     resolution: {integrity: sha512-OLOzI/lA+EwCh6znSexGAG1V4bkaT5gU04xl6ApEluv5jICnHhinZ707MObu+jhVVJ9uHDDlG85O+Afn1aTQoQ==}
+
+  '@dashkite/flashdom@0.1.0':
+    resolution: {integrity: sha512-+bD3TRss88kn25zNHE8Ab3oamcwLJgFo2k+foQ7obo7bYP5xLeUHV+v585J76p3SsVOnzbT0d2rO+XU6DCRi3Q==}
 
   '@dashkite/generic@0.9.0':
     resolution: {integrity: sha512-Ho2pDNAEbO3WQFvZiPkhaaT2szgQKRWLXXwXgSzPjoVgmiVAptTWwsEmjDOWBtp254ZNhwk+F7jYpk+ZcJvyLQ==}
@@ -2110,6 +2113,11 @@ snapshots:
   '@dashkite/assert@0.1.4':
     dependencies:
       '@dashkite/joy': 0.3.16
+
+  '@dashkite/flashdom@0.1.0':
+    dependencies:
+      '@dashkite/generic': 0.9.0
+      '@dashkite/joy': 0.11.0
 
   '@dashkite/generic@0.9.0':
     dependencies:
