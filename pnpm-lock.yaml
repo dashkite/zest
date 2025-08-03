@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@dashkite/flashdom':
-        specifier: ^0.1.4
-        version: 0.1.4
+        specifier: ^0.1.5
+        version: 0.1.5
       '@dashkite/generic':
         specifier: ^0.9.4
         version: 0.9.4
@@ -598,8 +598,8 @@ packages:
   '@dashkite/assert@0.1.4':
     resolution: {integrity: sha512-OLOzI/lA+EwCh6znSexGAG1V4bkaT5gU04xl6ApEluv5jICnHhinZ707MObu+jhVVJ9uHDDlG85O+Afn1aTQoQ==}
 
-  '@dashkite/flashdom@0.1.4':
-    resolution: {integrity: sha512-s5G6gd5nkefouojxN8FOM6dxIOizNZVXdEP8W6YDbGfsOmrPsTqQaKZK6utKnk20vTVvDd5IxXU0fXRADSfDww==}
+  '@dashkite/flashdom@0.1.5':
+    resolution: {integrity: sha512-eJnlZZfuqzfYcssV+UE83+hTagP22Vlhh5EbqQVmpyfxby+m0Ss3FtH5ftNWEaALnzRHBIMuqBLcrfO0vbD9CQ==}
 
   '@dashkite/generic@0.9.4':
     resolution: {integrity: sha512-YxvnTQ9+VxIVyzwZIMpYu1JoqAr0kFzI9K6AI1m9BOP43nUYvv5rldiKzzukLqEf5kZ69yGFHw51zsTV5PF73g==}
@@ -2130,7 +2130,7 @@ snapshots:
     dependencies:
       '@dashkite/joy': 0.3.16
 
-  '@dashkite/flashdom@0.1.4':
+  '@dashkite/flashdom@0.1.5':
     dependencies:
       '@dashkite/generic': 0.9.4
       '@dashkite/joy': 0.11.0

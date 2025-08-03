@@ -44,7 +44,7 @@
     "@dashkite/genie-release": "^0.4.3"
   },
   "dependencies": {
-    "@dashkite/flashdom": "^0.1.4",
+    "@dashkite/flashdom": "^0.1.5",
     "@dashkite/generic": "^0.9.4",
     "@dashkite/joy": "^0.11.0"
   }
