@@ -1,6 +1,6 @@
 {
   "name": "@dashkite/zest",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "List monad for the DOM",
   "keywords": [],
   "homepage": "https://github.com/dashkite/zest#readme",
