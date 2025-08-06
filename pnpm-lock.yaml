@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@dashkite/flashdom':
-        specifier: ^0.1.6
-        version: 0.1.6
+        specifier: ^0.1.7
+        version: 0.1.7
       '@dashkite/generic':
         specifier: ^0.9.6
         version: 0.9.6
@@ -34,8 +34,8 @@ importers:
         specifier: ^0.13.6
         version: 0.13.6
       '@dashkite/genie-coffee':
-        specifier: ^0.13.7
-        version: 0.13.7
+        specifier: ^0.13.8
+        version: 0.13.8
       '@dashkite/genie-release':
         specifier: ^0.4.3
         version: 0.4.3
@@ -598,8 +598,8 @@ packages:
   '@dashkite/assert@0.1.4':
     resolution: {integrity: sha512-OLOzI/lA+EwCh6znSexGAG1V4bkaT5gU04xl6ApEluv5jICnHhinZ707MObu+jhVVJ9uHDDlG85O+Afn1aTQoQ==}
 
-  '@dashkite/flashdom@0.1.6':
-    resolution: {integrity: sha512-a9exAw7nS1nQWQorPNFUAmds5lrRCsTjJBE93dzLWOpQFn5dchcpaBUhbPMAiRR59nc7eN8aoVAFajk24PcXVg==}
+  '@dashkite/flashdom@0.1.7':
+    resolution: {integrity: sha512-BLkQAKLSCEdLeEBIqa/jOiwstJ0Ej78AC8spABDyuh65hR2OZ0sVGfxxvNaDYNalCtVc6L1JddVspZY9TvTFzQ==}
 
   '@dashkite/generic@0.9.6':
     resolution: {integrity: sha512-5DMmIsx4goUzpNqUvk8Gj/6FKe724bzXDhWzc9qsDWwXJv8ZOkro+RYwgpl1zU1Mn4WgvsU0RJzEqH9pHkDGeQ==}
@@ -607,8 +607,8 @@ packages:
   '@dashkite/genie-clean@0.13.6':
     resolution: {integrity: sha512-zQVzI22mDjJu28Krzt4Alu60tb/8AmYFOJqLCdl4zVPWb9VUFhypW+NLrZ9uRSzGwvNdcVkmdOwFcscTeiwTdg==}
 
-  '@dashkite/genie-coffee@0.13.7':
-    resolution: {integrity: sha512-5Qx8tv/w49om6piimzbOQZFb/HtH49tgRF2YS6woP7DRt4tP56TVAaIPY1f4BqN2xDgbIJpGdhRO76tQLoolNQ==}
+  '@dashkite/genie-coffee@0.13.8':
+    resolution: {integrity: sha512-c3Mx/RNnESpYtgBHMTYK3AAWb9FTUr3TiFU5JvIYdDL0pFULkWur6/SyrUXau92lUQwn8io6ibWC2Bg2VvkuEA==}
 
   '@dashkite/genie-release@0.4.3':
     resolution: {integrity: sha512-9qqf7L80jmrRDPw0vhb475ed3hMDPWU782pH0bos4DdjyyObVHZePf26tgaeO9YSaFu4UC/RURxKKh+XmlqOIw==}
@@ -2130,7 +2130,7 @@ snapshots:
     dependencies:
       '@dashkite/joy': 0.3.16
 
-  '@dashkite/flashdom@0.1.6':
+  '@dashkite/flashdom@0.1.7':
     dependencies:
       '@dashkite/generic': 0.9.6
       '@dashkite/joy': 0.11.0
@@ -2145,7 +2145,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@dashkite/genie-coffee@0.13.7':
+  '@dashkite/genie-coffee@0.13.8':
     dependencies:
       '@dashkite/masonry': 0.21.0
       '@dashkite/masonry-coffee': 0.10.0
