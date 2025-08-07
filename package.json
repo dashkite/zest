@@ -40,11 +40,11 @@
     "@dashkite/assert": "^0.1.4",
     "@dashkite/genie": "^0.20.12",
     "@dashkite/genie-clean": "^0.13.10",
-    "@dashkite/genie-coffee": "^0.13.10",
+    "@dashkite/genie-coffee": "^0.13.11",
     "@dashkite/genie-release": "^0.4.3"
   },
   "dependencies": {
-    "@dashkite/flashdom": "^0.1.11",
+    "@dashkite/flashdom": "^0.1.12",
     "@dashkite/generic": "^0.9.9",
     "@dashkite/joy": "^0.11.0"
   }
