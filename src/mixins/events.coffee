@@ -54,6 +54,10 @@ class Listener
     @fx.push ( event ) -> 
       event if event? && ( event.target.closest selector )?
 
+  filter: Fn.chain ( predicate ) ->
+    @fx.push ( event ) ->
+      if predicate event then event
+
   apply: ( handler ) ->
     @fx.push ( event ) ->
       ( handler event ) if event?
