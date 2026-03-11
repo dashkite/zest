@@ -4,197 +4,248 @@
 
 [![Hippocratic License HL3-CORE](https://img.shields.io/static/v1?label=Hippocratic%20License&message=HL3-CORE&labelColor=5e2751&color=bc8c3d)](https://firstdonoharm.dev/version/3/0/core.html)
 
-Inspired by JQuery, Zest provides a monadic interface for interacting with the DOM.
+Inspired by JQuery, Zest provides a monadic interface for interacting with the DOM. It treats collections of DOM elements as iterable objects, using **Mixins** to compose functionality and **Proxies** to project into specialized interfaces without polluting the core namespace.
 
-## Usage
+## The `$` Constructor
 
-### Examples
-
-Event listener:
+The `$` function is a generic dispatcher used to wrap elements or query the DOM.
 
 ```coffeescript
 import $ from "@dashkite/zest"
 
-await $.ready
+# Selectors
+$ ".item"               # document.querySelectorAll
+$ ".item", container    # container.querySelectorAll
 
-$ "button"
-	.listen()
-  .click()
-  .intercept()
-  .apply -> console.log "button clicked!"
+# Direct Wrappers
+$ document.body         # Single Node
+$ [ el1, el2 ]            # Iterable/Array
+
+# HTML Parsing
+$ "<div class='new'>"   # Creates elements from HTML string
+
+# Functional
+$ -> yield el           # Wraps a Generator Function
+
 ```
 
-Diff-based update:
+---
+
+## Categorical Operations (Core)
+
+Zest collections implement the iterator protocol and provide functional transformation methods. Because Zest uses `Arr.normalize`, collections are guaranteed to be flat and unique.
+
+* **`map(fn)`**: Returns a new Zest collection by applying `fn` to each element.
+* **`filter(fn)`**: Returns a new Zest collection containing only elements that satisfy the predicate.
+* **`each(fn)`**: Executes `fn` for each element. Returns the original collection for chaining.
+* **`at(n)`**: Returns the element at index `n`.
+* **`first` / `last**`: Getters for the first and last elements in the collection.
+
+---
+
+## Projections & Specialized Interfaces
+
+Zest uses a "projection" pattern where complex behaviors are accessed through getters that return specialized handlers. This keeps the base collection API clean.
+
+### Attributes & Data
+
+Proxies are used to provide a clean, object-like interface to DOM attributes and datasets.
+
+* **`.attributes`**: A Proxy reflecting the attributes of the **first** element.
+* **`.data`**: A Proxy reflecting the `dataset` of the **first** element via a `Handler`.
+* **`.dataset`**: Direct access to the `HTML5 dataset` property.
 
 ```coffeescript
-$ "heading"
-	.render "<h1>Hello, World</h1>"
+# Get/Set via Proxy
+$el.attributes.title = "Zest Documentation"
+console.log $el.data.userId
+
 ```
-
-## API
-
-### Constructors
-
-#### Node
-
-Constructs a unitary Zest with the given element.
-
-#### HTML
-
-Parses the HTML and constructs a Zest with the resulting NodeLIst.
-
-#### Selector
-
-Selects the given elements and constructs a Zest. Takes an optional root element.
-
-#### Iterable
-
-Constructs a Zest with the Nodes produced by the iterable.
-
-#### Generator
-
-Constructs a Zest with the Nodes produced by the generator.
-
-#### Event
-
-Constructs a unitary Zest based on the event target, if any, otherwise constructs an empty Zest.
-
-#### Nullish
-
-Constructs an empty Zest.
-
-### Elements
-
-#### each
-
-#### elements
-
-Returns the elements of the Zest object as an array.
-
-#### filter
-
-#### first
-
-Returns the first element of the Zest object or undefined.
-
-#### last
-
-Returns the last element of the Zest object or undefined.
-
-#### map
-
-Given: a function that takes and returns an DOM node, `map` applies the function to each Zest element, and returns a new Zest containing the results.
-
-### Accessors
-
-#### attributes
-
-The `attributes` property returns a proxy for an [Attributes](#attributes) object bound to the Zest.
-
-From there, you can manipulate the attributes of the Zest elements.
-
-##### Example
-
-```coffeescript
-$ "button"
-	.attributes
-  .get "name"
-```
-
-#### classes
-
-The `classes` property returns a [Classes](#attributes) object bound to the Zest.
-
-From there, you can manipulate the `class` attribute of the Zest elements.
-
-##### Example
-
-```coffeescript
-$ "button"
-	.classes
-  .toggle "default"
-```
-
-#### data
-
-The `data` property returns a proxy for a [DataSet](#dataset) object bound to the Zest.
-
-From there, you can manipulate the dataset properties of the Zest elements.
-
-#### dataset
-
-The `dataset` property returns the DOM dataset property of the first element in the Zest.
-
-#### form
-
-The `form` property returns a [Form](#form) object bound to the Zest.
-
-From there, you can access the form data properties of the Zest elements.
-
-#### id
-
-The `id` property returns the DOM dataset property of the first element in the Zest.
-
-#### html
-
-#### name
-
-#### properties
-
-#### text
-
-#### value
 
 ### Events
 
-#### listen
-#### dispatch
+The `events` mixin provides a fluent, chainable API for event management.
 
-#### blur
+* **`listen(event)`**: Returns a `Listener` for the specified event.
+* **`capture()`**: Initiates a listener in the capture phase.
+* **`dispatch(name)`** or **`dispatch({ name, detail... })`**: Dispatches a `CustomEvent` that bubbles and is composed.
 
-#### click
+**Listener Methods:**
+Chainable filters that modify the execution of the handler:
 
-#### focus
-### Navigation
+* `stop()`, `prevent()`, `intercept()`: Stop propagation and/or prevent default.
+* `matches(selector)`: Only triggers if the target matches the selector.
+* `within(selector)`: Only triggers if the target is within a selector (using `closest`).
+* `apply(handler)`: Binds the final logic to the chain.
 
-#### closest
+```coffeescript
+$ ".btn"
+  .listen "click"
+  .prevent()
+  .within ".container"
+  .apply (e) -> console.log "Scoped click within container"
 
-### Updates
+```
 
-#### render
+---
 
-### Observation
+## DOM Navigation & Traversals
 
-#### show
+### Navigators
 
-#### hide
+Categorical movement through the DOM tree. Getters like `next` and `parent` return new Zest collections containing the relative nodes for every element in the source collection.
 
-#### modify
+* **`next` / `previous**`: Getters returning collections of the immediate siblings.
+* **`parent`**: Returns a collection of parent nodes.
+* **`children`**: Returns a Zest collection of all `childNodes` of the first element.
+* **`query(selector)`**: Runs `querySelector` on each element.
+* **`closest(selector)`**: Finds the nearest ancestor matching the selector for each element in the set.
 
-### Filters
+---
 
-#### matches
+## Observers & Intersection
 
-### Attributes
+Zest wraps complex async browser APIs into clean, functional callbacks using the `modify`, `show`, and `hide` interfaces.
 
-#### has
+* **`.modify`**: Accesses `MutationObserver` logic.
+* `attributes(names, handler)`: Watch for changes to specific attributes.
+* `children(handler)`: Watch for immediate child additions/removals.
+* `descendents(handler)`: Watch the entire subtree.
 
-#### get
 
-#### set
+* **`.show(handler)`**: Triggers when an element becomes visible (via `IntersectionObserver`).
+* **`.hide(handler)`**: Triggers when an element is hidden.
 
-#### remove
+---
 
-#### keys
+## Web Component Support (Slots)
 
-#### data
+Zest provides first-class support for Shadow DOM slots and assigned nodes.
 
-### Classes
+* **`.slots`**: Returns a dictionary mapping slot names to the corresponding elements.
+* **`.slotted`**: A projection for accessing nodes assigned to slots within the collection.
+* `named(name)`: Nodes assigned to a specific named slot.
+* `anonymous()`: Nodes assigned to the default slot.
+* `all()`: All assigned nodes.
 
-### Form
 
-### Listener
 
-### Modify
+---
 
-### Properties
+### Technical Implementation Note
+
+Zest utilizes a **Flat-Type** architecture via the `metaclass` pattern. This allows the `Zest` class to be composed of many mixins (Attributes, Classes, Events, etc.) while maintaining a single prototype chain, ensuring that `instanceof Zest` remains a reliable check.
+
+## JQuery Comparison
+
+While Zest shares the familiar `$` constructor with JQuery, it takes full advantage of modern JavaScript and browser APIs. 
+
+
+### Selection & Context
+
+The basic starting point is the same:
+
+| Task | jQuery | Zest |
+| --- | --- | --- |
+| **Select** | `$(".item")` | `$(".item")` |
+| **Context** | `$(".item", root)` | `$(".item", root)` |
+| **Create** | `$("<div>")` | `$("<div>")` |
+
+### Events: From `.on()` to `.listen()`
+
+Zest replaces the overloaded `.on()` method with a chainable `listen` projection. This separates the event configuration (filters, stops, prevents) from the actual handler.
+
+**Recipe: Delegation**
+
+```coffeescript
+# jQuery
+$(document).on "click", ".btn", (e) -> console.log "Clicked"
+
+# Zest
+$ document
+  .listen "click"
+  .within ".btn"
+  .apply (e) -> console.log "Clicked"
+
+```
+
+### Attributes & Data: From Methods to Proxies
+
+Instead of `.attr()` and `.data()` methods, Zest projects the collection into a **Proxy** that acts like a standard object.
+
+**Recipe: Reading and Writing Data**
+
+```coffeescript
+# jQuery
+userId = $el.data "id"
+$el.attr "title", "User Profile"
+
+# Zest
+userId = $el.data.id
+$el.attributes.title = "User Profile"
+
+```
+
+### Forms: Direct Data Extraction
+
+Zest simplifies form handling by utilizing the native `FormData` API through the `.form` projection.
+
+**Recipe: Get Form Values**
+
+```coffeescript
+# jQuery
+values = $("form").serializeArray()
+
+# Zest
+values = $("form").form.data
+
+```
+
+### Content & Rendering
+
+Zest moves away from jQuery's string-heavy manipulation toward native node handling and the `@dashkite/flashdom` declarative renderer.
+
+| Task | jQuery | Zest |
+| --- | --- | --- |
+| **Get HTML** | `$el.html()` | `$el.html` |
+| **Set HTML** | `$el.html("<b>Hi</b>")` | `$el.html = "<b>Hi</b>"` |
+| **Empty** | `$el.empty()` | `$el.html = ""` |
+| **Append Node** | `$el.append(node)` | `$el.html = node` |
+
+---
+
+## Common Recipes
+
+### Watching for Visibility
+
+Instead of manually calculating scroll offsets or using a heavy plugin, Zest uses a native `IntersectionObserver` wrapper.
+
+```coffeescript
+# Trigger logic when an element enters the viewport
+$ ".lazy-image"
+  .show (el) -> 
+    $(el).attributes.src = $(el).data.src
+
+```
+
+### Scoped Property Updates
+
+You can update properties across an entire collection using the `properties` proxy. This is more performant than manual iteration for simple DOM properties.
+
+```coffeescript
+# Disable all buttons in a container
+$ ".submit-group button"
+  .properties.disabled = true
+
+```
+
+### The "Shadow DOM" Slot Recipe
+
+If you are building Web Components, Zest provides a clean way to find nodes assigned to specific slots.
+
+```coffeescript
+# Get all nodes assigned to the "header" slot
+headerNodes = $ "my-component"
+  .slotted.named "header"
+
+```
