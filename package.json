@@ -1,6 +1,6 @@
 {
   "name": "@dashkite/zest",
-  "version": "0.0.0",
+  "version": "0.1.24",
   "description": "List monad for the DOM",
   "keywords": [],
   "homepage": "https://github.com/dashkite/zest#readme",
@@ -22,22 +22,31 @@
       "browser": "./build/browser/src/index.js"
     }
   },
-  "main": "build/browser/src/index.js",
+  "imports": {
+    "#helpers/*": "./build/browser/src/helpers/*.js",
+    "#mixins": "./build/browser/src/mixins/index.js"
+  },
   "files": [
     "build/browser/src"
   ],
   "scripts": {
     "test": "genie test",
-    "build": "genie build"
+    "build": "genie build",
+    "release": "genie release"
   },
   "devDependencies": {
-    "@dashkite/amen": "^0.2.0",
+    "@dashkite/amen": "^0.2.2",
     "@dashkite/amen-console": "^0.0.2",
     "@dashkite/assert": "^0.1.4",
-    "@dashkite/genie": "link:../genie",
-    "@dashkite/genie-clean": "link:../genie-clean",
-    "@dashkite/genie-coffee": "link:../genie-coffee"
+    "@dashkite/genie": "^0.20.14",
+    "@dashkite/genie-clean": "^0.13.12",
+    "@dashkite/genie-coffee": "^0.13.15",
+    "@dashkite/genie-module": "link:../genie-module",
+    "@dashkite/genie-release": "^0.5.0"
   },
   "dependencies": {
+    "@dashkite/flashdom": "^0.1.18",
+    "@dashkite/generic": "^0.9.17",
+    "@dashkite/joy": "^0.11.0"
   }
 }
