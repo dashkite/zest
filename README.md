@@ -249,3 +249,111 @@ headerNodes = $ "my-component"
   .slotted.named "header"
 
 ```
+
+## Extending Zest
+
+Extending Zest is done by creating functional mixins that hook into the `@dashkite/joy` metaclass system. This allows you to add domain-specific projections—like a "Gallery" or "Auth" interface—without modifying the core library.
+
+---
+
+## Extending Zest: Custom Mixins
+
+Since Zest uses a **Flat-Type** architecture, adding a feature means defining a mixin and applying it to the base `Zest` class.
+
+### 1. Defining a Projection
+
+A common pattern in Zest is to use a "Handler" class and a Proxy. This keeps your custom methods from clashing with other mixins.
+
+```coffeescript
+import { metaclass } from "@dashkite/joy/metaclass"
+
+# The specialized logic
+class Gallery extends metaclass()
+  @make: (zest) -> 
+    Object.assign (new @), { zest }
+
+  next: ->
+    # Logic to find next image in a set
+    @zest.each (el) -> console.log "Advancing gallery: #{el.id}"
+
+# The mixin function
+gallery = (base = metaclass()) ->
+  class extends base
+    @getters
+      gallery: -> Gallery.make @
+
+export { gallery }
+
+```
+
+### 2. Registering the Mixin
+
+To use your new projection, you include it in the `Fn.pipe` chain when defining your custom Zest instance.
+
+```coffeescript
+import { Zest } from "@dashkite/zest/zest"
+import { gallery } from "./mixins/gallery"
+
+# Create an extended version of Zest
+class MyZest extends Fn.pipe([ gallery ]) Zest
+
+# Usage
+$ ".photo-hub"
+  .gallery.next()
+
+```
+
+---
+
+## Extension Recipes
+
+### The "UI Component" Recipe
+
+If you find yourself repeatedly setting specific ARIA attributes or UI states, you can create a `ui` projection.
+
+```coffeescript
+ui = (base = metaclass()) ->
+  class extends base
+    @getters
+      ui: ->
+        busy: (state) => @each (el) -> el.setAttribute "aria-busy", state
+        hidden: (state) => @each (el) -> el.hidden = state
+
+# Usage
+$ ".submit-btn"
+  .ui.busy "true"
+
+```
+
+### The "Animate" Recipe
+
+Zest’s categorical nature makes it perfect for triggering CSS transitions across multiple elements simultaneously.
+
+```coffeescript
+animate = (base = metaclass()) ->
+  class extends base
+    fade: (opacity) ->
+      @each (el) -> 
+        el.style.transition = "opacity 0.5s"
+        el.style.opacity = opacity
+
+# Usage
+$ ".alert-box"
+  .fade 0
+
+```
+
+---
+
+## Internal Architecture Reference
+
+Understanding the relationship between the **Zest Collection**, **Mixins**, and **Proxies** is key to effective extension.
+
+| Layer | Component | Role |
+| --- | --- | --- |
+| **Interface** | `$` Constructor | Generically dispatches and wraps nodes into a collection. |
+| **Logic** | Mixins | Provide the flat methods (like `each`, `map`) and the projection getters. |
+| **Projection** | Proxies / Handlers | Isolate specialized domain logic (like `events` or `forms`). |
+| **Data** | Categorical List | The underlying array of elements being acted upon. |
+
+**Would you like me to draft a `CONTRIBUTING.md` file based on this architecture to help other developers add mixins to the Zest ecosystem?**

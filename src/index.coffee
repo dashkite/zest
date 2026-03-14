@@ -28,7 +28,7 @@ $ = do ->
         Document
           .parseHTMLUnsafe source
           .body
-          .childNodes
+          .children
 
     .define [ Node ], ( node ) -> Zest.make [ node ]
 
