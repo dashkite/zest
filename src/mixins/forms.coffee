@@ -3,8 +3,12 @@ import { metaclass } from "@dashkite/joy/metaclass"
 class Form extends metaclass()
 
   @make: ( zest ) ->
-    Object.assign ( new @ ),
-      form: zest.first if zest.first instanceof HTMLFormElement  
+    form = if zest.first instanceof HTMLFormElement
+      zest.first
+    else
+      ( zest.query "form" ).first
+      
+    Object.assign ( new @ ), { form }
 
   @getters
 

@@ -29,23 +29,19 @@ $ -> yield el           # Wraps a Generator Function
 
 ```
 
----
-
 ## Categorical Operations (Core)
 
 Zest collections implement the iterator protocol and provide functional transformation methods. Because Zest uses `Arr.normalize`, collections are guaranteed to be flat and unique.
 
-* **`map(fn)`**: Returns a new Zest collection by applying `fn` to each element.
-* **`filter(fn)`**: Returns a new Zest collection containing only elements that satisfy the predicate.
-* **`each(fn)`**: Executes `fn` for each element. Returns the original collection for chaining.
+* **`map(f)`**: Returns a new Zest collection by applying `f` to each element.
+* **`filter(f)`**: Returns a new Zest collection containing only elements that satisfy the predicate `f`.
+* **`each(f)`**: Executes `f` for each element. Returns the original collection for chaining.
 * **`at(n)`**: Returns the element at index `n`.
-* **`first` / `last**`: Getters for the first and last elements in the collection.
-
----
+* `first` / `last`: Getters for the first and last elements in the collection.
 
 ## Projections & Specialized Interfaces
 
-Zest uses a "projection" pattern where complex behaviors are accessed through getters that return specialized handlers. This keeps the base collection API clean.
+Zest uses a _projection_ pattern where complex behaviors are accessed through getters that return specialized handlers. This keeps the base collection API clean.
 
 ### Attributes & Data
 
