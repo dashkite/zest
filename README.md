@@ -2,6 +2,8 @@
 
 *A DOM List Monad for modern web development.*
 
+[![Hippocratic License HL3-CORE](https://img.shields.io/static/v1?label=Hippocratic%20License&message=HL3-CORE&labelColor=5e2751&color=bc8c3d)](https://firstdonoharm.dev/version/3/0/core.html)
+
 Zest provides a monadic interface for interacting with the DOM, treating collections of elements as functional, iterable objects. It avoids the bloat of traditional libraries by using a modular mixin architecture and proxies to project specialized behaviors only when needed.
 
 For example, selecting all buttons in a container and preventing their default click behavior is concise and chainable:

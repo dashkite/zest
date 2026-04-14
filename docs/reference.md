@@ -7,21 +7,17 @@ Detailed API documentation for the Zest DOM monad and its core mixins.
 The `$` function is a generic constructor that wraps DOM elements or queries the document to create a Zest collection.
 
 #### $
-$\text{\$} \to Zest$
 
-$\text{\$} : nullish \to Zest$
+Creation patterns:
 
-$\text{\$} : generator \to Zest$
-
-$\text{\$} : iterable \to Zest$
-
-$\text{\$} : selector: string, root: node \to Zest$
-
-$\text{\$} : selector: string \to Zest$
-
-$\text{\$} : html: string \to Zest$
-
-$\text{\$} : node: node \to Zest$
+- $\text{\$} \to Zest$
+- $\text{\$} : nullish \to Zest$
+- $\text{\$} : generator \to Zest$
+- $\text{\$} : iterable \to Zest$
+- $\text{\$} : selector, root \to Zest$
+- $\text{\$} : selector \to Zest$
+- $\text{\$} : html \to Zest$
+- $\text{\$} : node \to Zest$
 
 Creates a Zest collection from the given input. If no input or nullish input is provided, returns an empty collection. HTML strings are parsed into element nodes.
 
@@ -47,7 +43,7 @@ tagNames = $ "div" .map ( el ) -> el.tagName
 ```
 
 #### filter
-$filter: function \to Zest$
+$filter: predicate \to Zest$
 
 Returns a new Zest collection containing only those elements for which the predicate function returns true.
 
@@ -67,7 +63,7 @@ $ ".item" .each ( el ) -> console.log el.id
 ### Element Access
 
 #### at
-$at: index: number \to node$
+$at: index \to node$
 
 Returns the element at the specified index. Supports negative indices to access elements from the end of the collection.
 
@@ -112,15 +108,16 @@ console.log $ "#user" .data.userId
 ### Events
 
 #### listen
-$listen: eventName: string \to Listener$
+$listen: eventName \to Listener$
 
 Initiates an event listener configuration. Returns a `Listener` handler that can be further configured with filters and behaviors before applying the handler.
 
 **Listener Methods:**
+
 - $prevent: \to Listener$
 - $stop: \to Listener$
-- $within: selector: string \to Listener$
-- $apply: handler: function \to undefined$
+- $within: selector \to Listener$
+- $apply: handler \to \varnothing$
 
 ```coffeescript
 $ ".form"
@@ -142,7 +139,7 @@ $parent \to Zest$
 Getter returning a new Zest collection of all parent nodes for every element in the collection.
 
 #### query
-$query: selector: string \to Zest$
+$query: selector \to Zest$
 
 Runs `querySelectorAll` using the given selector within each element of the current collection.
 
