@@ -38,15 +38,15 @@
     "@dashkite/amen": "^0.2.2",
     "@dashkite/amen-console": "^0.0.2",
     "@dashkite/assert": "^0.1.4",
-    "@dashkite/genie": "^0.20.15",
+    "@dashkite/genie": "^0.20.16",
     "@dashkite/genie-clean": "^0.13.14",
-    "@dashkite/genie-coffee": "^0.13.16",
-    "@dashkite/genie-module": "^0.5.43",
-    "@dashkite/genie-release": "^0.5.2"
+    "@dashkite/genie-coffee": "^0.13.17",
+    "@dashkite/genie-module": "^0.5.44",
+    "@dashkite/genie-release": "^0.5.3"
   },
   "dependencies": {
-    "@dashkite/flashdom": "^0.1.19",
-    "@dashkite/generic": "^0.9.19",
+    "@dashkite/flashdom": "^0.1.20",
+    "@dashkite/generic": "^0.9.20",
     "@dashkite/joy": "^0.11.0"
   }
 }
