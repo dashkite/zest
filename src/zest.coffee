@@ -36,7 +36,7 @@ class Zest extends do Fn.pipe [
       if isReady()
         resolve()
       else
-        document.onreadystatechange ->
+        document.onreadystatechange = ->
           if isReady()
             resolve() 
 
