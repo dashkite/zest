@@ -6,30 +6,19 @@
 
 Zest provides a monadic interface for interacting with the DOM, treating collections of elements as functional, iterable objects. It avoids the bloat of traditional libraries by using a modular mixin architecture and proxies to project specialized behaviors only when needed.
 
-For example, selecting all buttons in a container and preventing their default click behavior is concise and chainable:
+## Features
 
-```coffeescript
-import $ from "@dashkite/zest"
-
-$ ".btn", container
-  .listen "click"
-  .prevent()
-  .apply ( e ) -> 
-    # handle click
-```
-
-### Features
 - **Monadic Interface**: Elements are managed as collections with functional combinators like `map` and `filter`.
 - **Modular Mixins**: Functionality is composed via mixins, keeping the core API lean.
-- **Proxies & Projections**: Complex behaviors (events, attributes, data) are accessed through specialized projections.
+- **Proxies and Projections**: Complex behaviors (events, attributes, data) are accessed through specialized projections.
 - **Modern Native APIs**: Built on top of modern browser standards like `IntersectionObserver` and `MutationObserver`.
 
 ## Installation
 
-Use your favorite package manager to install:
+Use `pnpm` to install the package:
 
 ```bash
-pnpm add @dashkite/zest
+pnpm install @dashkite/zest
 ```
 
 ## Usage
@@ -49,11 +38,19 @@ body = $ document.body
 visible = 
   $ ".item"
     .filter ( el ) -> el.checkVisibility()
+
+# Delegate events seamlessly
+$ ".container"
+  .listen "click"
+  .within ".btn"
+  .prevent()
+  .apply ( e ) -> 
+    # handle click logic here
 ```
 
 ## Other Resources
-- [Reference](./docs/reference.md): Detailed API documentation for the `$` constructor and Zest methods.
-- [Recipes](./docs/recipes.md): Task-based guides for common DOM interaction scenarios.
 
-## Status
-This software is currently in active development and is not yet suitable for production use. Please report bugs or request features via the repository's issue tracker.
+- [Reference](./docs/reference.md)
+- [Recipes](./docs/recipes.md)
+- [Technical Notes](./docs/technical-notes.md)
+- [Testing](./docs/testing.md)

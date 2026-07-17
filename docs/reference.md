@@ -1,150 +1,20 @@
-# Zest Reference
+# Zest API Reference
 
-Detailed API documentation for the Zest DOM monad and its core mixins.
+This document serves as the hub for the Zest library API reference. Zest collections present a unified, chainable interface across a large set of domains using a modular mixin architecture. To avoid polluting the core `Zest` collection namespace with hundreds of specific methods, Zest relies on **Projections** and **Proxies**.
 
-## The `$` Constructor
+- **Projections** return specialized handler objects. For example, accessing `.form` returns a `Form` projection object focused strictly on forms, while `.modify` returns an interface for configuring mutation observers.
+- **Proxies** offer direct, object-like access to underlying DOM APIs. For instance, `.properties` allows you to set arbitrary properties directly on elements in the collection seamlessly.
 
-The `$` function is a generic constructor that wraps DOM elements or queries the document to create a Zest collection.
+## Reference Modules
 
-#### $
+The API is divided into the following modules based on their underlying classes and projections:
 
-Creation patterns:
-
-- $\text{\$} \to Zest$
-- $\text{\$} : nullish \to Zest$
-- $\text{\$} : generator \to Zest$
-- $\text{\$} : iterable \to Zest$
-- $\text{\$} : selector, root \to Zest$
-- $\text{\$} : selector \to Zest$
-- $\text{\$} : html \to Zest$
-- $\text{\$} : node \to Zest$
-
-Creates a Zest collection from the given input. If no input or nullish input is provided, returns an empty collection. HTML strings are parsed into element nodes.
-
-```coffeescript
-# Select nodes
-items = $ ".item"
-
-# Wrap existing nodes
-body = $ document.body
-```
-
-## Core Methods
-
-### Categorical Operations
-
-#### map
-$map: function \to Zest$
-
-Given a mapping function, returns a new Zest collection where each element has been transformed by the function.
-
-```coffeescript
-tagNames = $ "div" .map ( el ) -> el.tagName
-```
-
-#### filter
-$filter: predicate \to Zest$
-
-Returns a new Zest collection containing only those elements for which the predicate function returns true.
-
-```coffeescript
-activeItems = $ ".item" .filter ( el ) -> el.classList.contains "active"
-```
-
-#### each
-$each: function \to Zest$
-
-Executes the provided function for each element in the collection. Returns the original Zest collection to enable chaining.
-
-```coffeescript
-$ ".item" .each ( el ) -> console.log el.id
-```
-
-### Element Access
-
-#### at
-$at: index \to node$
-
-Returns the element at the specified index. Supports negative indices to access elements from the end of the collection.
-
-```coffeescript
-assert $ ".item" .at -1 == $ ".item" .last
-```
-
-#### first
-$first \to node$
-
-Getter that returns the first element in the collection.
-
-#### last
-$last \to node$
-
-Getter that returns the last element in the collection.
-
-## Mixins & Projections
-
-Zest uses a modular mixin system to extend the base collection. Many complex behaviors are accessed via projections (getters returning specialized handlers).
-
-### Attributes & Data
-
-#### attributes
-$attributes \to Proxy$
-
-A Proxy that provides a direct object-like interface to the attributes of the **first** element in the collection.
-
-```coffeescript
-$ "#profile" .attributes.title = "User Profile"
-```
-
-#### data
-$data \to Proxy$
-
-A Proxy that provides a clean interface to the `dataset` of the **first** element.
-
-```coffeescript
-console.log $ "#user" .data.userId
-```
-
-### Events
-
-#### listen
-$listen: eventName \to Listener$
-
-Initiates an event listener configuration. Returns a `Listener` handler that can be further configured with filters and behaviors before applying the handler.
-
-**Listener Methods:**
-
-- $prevent: \to Listener$
-- $stop: \to Listener$
-- $within: selector \to Listener$
-- $apply: handler \to \varnothing$
-
-```coffeescript
-$ ".form"
-  .listen "submit"
-  .prevent()
-  .apply ( e ) -> handleSubmit e
-```
-
-### Navigation
-
-#### children
-$children \to Zest$
-
-Getter returning a new Zest collection of all child elements for every node in the source collection.
-
-#### parent
-$parent \to Zest$
-
-Getter returning a new Zest collection of all parent nodes for every element in the collection.
-
-#### query
-$query: selector \to Zest$
-
-Runs `querySelectorAll` using the given selector within each element of the current collection.
-
-## Technical Notes
-
-### Categorical Normalization
-
-Zest collections are automatically flattened and unique upon creation, ensuring that operations like `map` and `filter` don't result in nested or duplicate element sets.
+- [The $ Constructor](./reference/constructor.md): The primary entry point for creating collections.
+- [Zest](./reference/zest.md): The core monadic collection and its generic methods.
+- [Classes](./reference/classes.md): The `Classes` projection for managing CSS classes.
+- [DataSet](./reference/dataset.md): The `DataSet` projection for managing data attributes.
+- [Form](./reference/form.md): The `Form` projection for extracting form data.
+- [Modify](./reference/modify.md): The `Modify` projection for declarative DOM mutation observation.
+- [Files](./reference/files.md): The `Files` projection for handling file inputs.
+- [Slotted](./reference/slotted.md): The `Slotted` projection for interacting with Web Component slots.
+- [Listener](./reference/listener.md): The `Listener` handler for declarative event composition.
